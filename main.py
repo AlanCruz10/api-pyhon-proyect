@@ -67,8 +67,8 @@ async def main():
                 first_time.append(date_time_one_object)
             else:
                 time_difference = date_time_one_object - first_time[0]
-                if time_difference.total_seconds() >= 10 and (
-                        date_time_one_object - last_print_time).total_seconds() >= 10:
+                if time_difference.total_seconds() >= 300 and (
+                        date_time_one_object - last_print_time).total_seconds() >= 300:
                     last_print_time = date_time_one_object
                     first_time.clear()
                     humidity_statistics_service = HumidityStatisticsService.HumidityStatisticsService(
