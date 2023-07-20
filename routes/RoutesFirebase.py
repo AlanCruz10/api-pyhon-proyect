@@ -11,8 +11,9 @@ class RoutesFirebase(Enum):
     sensor = '/amili/sensor/real-time'
     temperature = '/amili/esp32/temperature'
     light = '/amili/esp32/light'
-    water_level = '/amili/esp32/water-level'
+    water_level = '/amili/esp32/waterLevel'
     statistics_humidity = "/amili/statistics/humidity"
+    product_key = "/amili/esp32/productKey"
 
 
 def humidity_one():
@@ -41,3 +42,7 @@ def water_lever():
 
 def statistic_humidity():
     return db.reference(RoutesFirebase.statistics_humidity.value)
+
+
+def product_key():
+    return db.reference(RoutesFirebase.product_key.value)

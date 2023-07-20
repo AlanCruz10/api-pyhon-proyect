@@ -6,15 +6,16 @@ from configurations import configuration_database
 
 class HumidityStatisticsService:
 
-    def __init__(self, humidity_one_percentage, humidity_two_percentage, light, temperature, ):
+    def __init__(self, humidity_one_percentage, humidity_two_percentage, light, temperature, product_key):
         self.humidity_one = humidity_one_percentage
         self.humidity_two = humidity_two_percentage
         self.light = light
         self.temperature = temperature
+        self.product_key = product_key
         self.lower_humidity_standard = 80.0
         self.higher_humidity_standard = 90.0
         self.lower_temperature_standard = 20.0
-        self.higher_temperature_standard = 25.0
+        self.higher_temperature_standard = 27.0
         self.lower_light_standard = 50.0
         self.higher_light_standard = 60.0
         self.higher_moisture_priority = 0.6
@@ -22,10 +23,11 @@ class HumidityStatisticsService:
 
     async def humidity_weighted(self):
 
-        humidity1 = list(self.humidity_one[-1])[0]
-        humidity2 = list(self.humidity_two[-1])[0]
-        temperature = list(self.temperature[-1])[0]
-        light = list(self.light[-1])[0]
+        humidity1 = float(list(self.humidity_one[-1])[0])
+        humidity2 = float(list(self.humidity_two[-1])[0])
+        temperature = float(list(self.temperature[-1])[0])
+        light = float(list(self.light[-1])[0])
+        product_key = list(self.product_key[-1])[0]
 
         date1 = list(self.humidity_one[-1])[-1]
 
@@ -37,7 +39,6 @@ class HumidityStatisticsService:
             status = self.validation_standard(humidity_w, temperature, light)
             user, parameter, statistic, database = configuration_database.create_tables()
             await database.connect()
-            product_key = "1234qwer"
             select = user.select().where(user.c.product_key == product_key)
             user_found = await database.fetch_one(query=select)
             if user_found:
